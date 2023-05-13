@@ -30,37 +30,34 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title_document' => 'string',
-            'description_document' => 'string',
-            'region' => 'string',
-            'status' => 'string',
-            'files' => 'array'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $validator->messages()->toArray(),
-            ], 422);
-        }
-
-        $result = Document::create([
-            'title_document' => $request['title_document'],
-            'description_document' => $request['description_document'],
-            'content' => $request['content'],
-            'region' => $request['region'],
-            'status' => $request['status'],
+        $document = Document::create([
+            'title_document' => $request->input('title_document'),
+            'description_document' => $request->input('description_document'),
+            'content' => $request->input('content'),
+            'region' => auth()->user()->region,
+            'status' => $request->input('status'),
             'created_user_id' => auth()->user()->id,
-            'created_date' => date(now())
+            'created_date' => now(),
         ]);
-        if ($result) {
-            if ($request->hasFile('files')) {
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                // Сохраняем файл
+                $filename = $file->getClientOriginalName();
+                $file->storeAs('public/documents', $filename);
 
+                // Создаем новый объект файла, связанный с документом
+                $document->file()->create([
+                    'name_file' => $filename,
+                    'extension_file' => $file->getClientOriginalExtension(),
+                    'document_id' => $document->id,
+                    'created_user_id' => auth()->user()->id,
+                    'created_date' => date(now())
+                ]);
             }
         }
-        return 'test 2';
     }
+
 
     /**
      * Display the specified resource.

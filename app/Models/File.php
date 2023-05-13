@@ -27,6 +27,10 @@ class File extends Model
             'updated_date' => 'datetime',
         ];
 
+    public static function create(array $array)
+    {
+    }
+
     public function document(): BelongsTo
     {
         return $this->belongsTo(Document::class);
