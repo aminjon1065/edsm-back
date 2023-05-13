@@ -60,6 +60,8 @@ class User extends Authenticatable
         return $this->hasMany(LogAuthUser::class);
     }
 
-
-
+    public function document(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

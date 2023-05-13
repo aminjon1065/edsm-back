@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\File;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class DocumentController extends Controller
 {
@@ -29,9 +30,36 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        $attr = Validator::make($request->all(), [
-            ''
+        $validator = Validator::make($request->all(), [
+            'title_document' => 'string',
+            'description_document' => 'string',
+            'region' => 'string',
+            'status' => 'string',
+            'files' => 'array'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->messages()->toArray(),
+            ], 422);
+        }
+
+        $result = Document::create([
+            'title_document' => $request['title_document'],
+            'description_document' => $request['description_document'],
+            'content' => $request['content'],
+            'region' => $request['region'],
+            'status' => $request['status'],
+            'created_user_id' => auth()->user()->id,
+            'created_date' => date(now())
+        ]);
+        if ($result) {
+            if ($request->hasFile('files')) {
+
+            }
+        }
+        return 'test 2';
     }
 
     /**

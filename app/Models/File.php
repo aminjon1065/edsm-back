@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Document extends Model
+class File extends Model
 {
     use HasFactory;
 
     protected $fillable =
         [
-            'title_document',
-            'description_document',
-            'content',
-            'region',
-            'status',
+            'name_file',
+            'extension_file',
+            'document_id',
             'created_user_id',
             'updated_user_id',
             'created_date',
@@ -30,13 +27,8 @@ class Document extends Model
             'updated_date' => 'datetime',
         ];
 
-    public function user(): BelongsTo
+    public function document(): BelongsTo
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function file(): HasMany
-    {
-        return $this->hasMany(File::class);
+        return $this->belongsTo(Document::class);
     }
 }

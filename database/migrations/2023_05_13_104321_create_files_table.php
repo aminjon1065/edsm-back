@@ -10,13 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('title_document');
-            $table->text('description_document')->nullable();
-            $table->text('content')->nullable();
-            $table->string('region');
-            $table->string('status');
+            $table->string('name_file');
+            $table->string('extension_file');
+            $table->unsignedBigInteger('document_id');
+            $table->foreign('document_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->unsignedBigInteger('created_user_id');
             $table->unsignedBigInteger('updated_user_id')->nullable();
             $table->foreign('created_user_id')
@@ -38,6 +40,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('files');
     }
 };

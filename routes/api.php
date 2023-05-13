@@ -20,7 +20,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login']);
 });
 
-//Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
-//    Route::post('document', [\App\Http\Controllers\DocumentController::class, 'store']);
-//    Route::post('document/{id}', [\App\Http\Controllers\DocumentController::class, 'update']);
-//});
+Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
+    Route::post('document', [\App\Http\Controllers\DocumentController::class, 'store']);
+    Route::post('document/{id}', [\App\Http\Controllers\DocumentController::class, 'update']);
+});

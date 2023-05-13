@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class LogAuthUser extends Model
 {
     use HasFactory;
+
     protected $fillable =
         [
             'user_id',
@@ -17,7 +18,7 @@ class LogAuthUser extends Model
             'ip'
         ];
     protected $casts = [
-        'last_auth' => 'datetime'
+        'last_auth' => 'datetime',
     ];
 
     public function users(): BelongsTo
