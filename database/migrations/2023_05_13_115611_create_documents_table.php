@@ -20,6 +20,8 @@ return new class extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->dateTime('created_date');
+            $table->dateTime('updated_date')->nullable();
             $table->timestamps();
         });
     }
