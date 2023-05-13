@@ -21,6 +21,7 @@ class LogAuthUser extends Model
         'last_auth' => 'datetime',
     ];
 
+    //Отношение пользователи-логи авторизации
     public function users(): BelongsTo
     {
         return $this->belongsTo(User::class);

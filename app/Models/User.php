@@ -55,11 +55,13 @@ class User extends Authenticatable
         'uuid' => 'string',
     ];
 
+//    Отношение логи авторизации пользователей
     public function logAuthUsers(): HasMany
     {
         return $this->hasMany(LogAuthUser::class);
     }
 
+//    Отношение документы-пользователи
     public function document(): HasMany
     {
         return $this->hasMany(User::class);
