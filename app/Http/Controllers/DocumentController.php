@@ -7,6 +7,7 @@ use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use File as FileHelper;
 
 class DocumentController extends Controller
 {
@@ -103,25 +104,28 @@ class DocumentController extends Controller
         $document->description_document = $request->input('description_document', $document->description_document);
         $document->content = $request->input('content', $document->content);
         $document->status = $request->input('status', $document->status);
+        $document->updated_date = date(now());
+        $document->updated_user_id = auth()->user()->id;
 
         $document->save();
 
         $files = $request->file('files');
 
         if ($files) {
+//            $document->file()->delete();
             // Удаление предыдущих файлов
-            foreach ($document->files as $file) {
-                Storage::delete('public/documents/' . $file->name_file);
+            foreach ($document->file as $file) {
+//                dd($file->document->region);
+                Storage::move('public/documents/' . $file->document->region . '/' . $file->name_file, 'public/trashed/' . date('d-m-Y-H-i-s') . '_' . $file->document->region . '_' . $file->name_file);
                 $file->delete();
             }
 
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
-                    $originalName = $filename = str_replace(' ', '_', $file->getClientOriginalName());
+                    $originalName = str_replace(' ', '_', $file->getClientOriginalName());
 //                $dateValidation = str_replace(' ', '_', date('d-m-Y-H-i-s'));
                     $filename = auth()->user()->first_name . '_' . auth()->user()->last_name . '_' . auth()->user()->region . '_' . date('d-m-Y-H-i-s') . '_' . $originalName;
                     $file->storeAs('public/documents/' . auth()->user()->region, $filename);
-
                     $newFile = new File([
                         'name_file' => $filename,
                         'extension_file' => $file->getClientOriginalExtension(),
