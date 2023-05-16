@@ -8,15 +8,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use File as FileHelper;
+use Symfony\Component\Process\Process;
 
 class DocumentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $ipAddress = $request->ip();
+        $command = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'ipconfig /all' : 'ifconfig';
+
+        // Запуск процесса и получение вывода команды
+        $process = Process::fromShellCommandline($command);
+        $process->run();
+
+        // Поиск строки с MAC-адресом
+        $output = $process->getOutput();
+        preg_match('/([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})/', $output, $matches);
+        $macAddress = $matches[0] ?? null;
+        $MAC = exec('getmac');
+        $MAC = strtok($MAC, ' ');
+
+        return response()->json([
+            'mac_address' => $MAC,
+            'ip_address' => $ipAddress
+        ]);
     }
 
     /**
