@@ -32,19 +32,21 @@ class LoginController extends Controller
         $token = auth()->user()->createToken('__sign_token')->plainTextToken;
         $user = $this->isAuth();
         $lastLoginController = new LogAuthUserController();
-        $log = $lastLoginController->store($request['device'], $request['ip'], now());
+        $lastLoginController->store($request['device'], $request['ip'], now());
         return response()->json([
             'status' => 'success',
             'message' => 'Успешно вошли в систему',
             'token' => $token,
             'role' => $user['role'] == 1 ? 'Admin' : 'User',
-            'last_login' => $log,
-            'data' => $user
+            'user' => $user
         ], 201);
     }
-
     public function isAuth()
     {
         return auth()->user();
+    }
+    public function checkAuth()
+    {
+        return response()->json(['user' => \auth()->user()], 200);
     }
 }

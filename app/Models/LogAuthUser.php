@@ -14,8 +14,6 @@ class LogAuthUser extends Model
         [
             'user_id',
             'last_auth',
-            'device',
-            'ip'
         ];
     protected $casts = [
         'last_auth' => 'datetime',

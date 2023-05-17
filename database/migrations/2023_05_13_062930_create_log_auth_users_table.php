@@ -14,8 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->dateTime('last_auth');
-            $table->string("device");
-            $table->string("ip");
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

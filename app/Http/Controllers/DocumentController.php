@@ -29,7 +29,7 @@ class DocumentController extends Controller
         preg_match('/([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})/', $output, $matches);
         $macAddress = $matches[0] ?? null;
         $MAC = exec('getmac');
-        $MAC = strtok($MAC, ' ');
+        // $MAC = strtok($MAC, ' ');
 
         return response()->json([
             'mac_address' => $MAC,
