@@ -41,10 +41,12 @@ class LoginController extends Controller
             'user' => $user
         ], 201);
     }
+
     public function isAuth()
     {
         return auth()->user();
     }
+
     public function checkAuth()
     {
         return response()->json(['user' => \auth()->user()], 200);
