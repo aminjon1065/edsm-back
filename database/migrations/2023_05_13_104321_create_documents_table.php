@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->text('description_document')->nullable();
             $table->text('content')->nullable();
             $table->string('region');
+            $table->string('importance');
             $table->string('status');
             $table->foreignId('created_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('updated_user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
