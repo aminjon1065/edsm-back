@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->foreignId('to')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('from')->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('send_date');
-            $table->dateTime('watch_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -62,13 +62,19 @@ class User extends Authenticatable
         return $this->hasMany(LogAuthUser::class);
     }
 
-    public function lastLogAuth():HasOne
+    public function lastLogAuth(): HasOne
     {
-        return  $this->hasOne(LogAuthUser::class)->latest();
+        return $this->hasOne(LogAuthUser::class)->latest();
     }
+
 //    Отношение документы-пользователи
     public function document(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Document::class);
+    }
+
+    public function mail(): HasMany
+    {
+        return $this->hasMany(Mail::class);
     }
 }

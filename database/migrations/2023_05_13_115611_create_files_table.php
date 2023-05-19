@@ -36,7 +36,6 @@ return new class extends Migration {
             $table->dateTime('updated_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
         });
     }
 
