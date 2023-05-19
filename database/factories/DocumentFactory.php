@@ -16,7 +16,7 @@ class DocumentFactory extends Factory
         $importanceArr = ['normal', 'important'];
         $statusArr = ['pending', 'watched', 'late'];
         return [
-            'title_document' => fake()->title(),
+            'title_document' => fake()->word(),
             'description_document' => fake()->text(),
             'content' => fake()->text(),
             'region' => $user->region,

@@ -17,24 +17,9 @@ class DocumentController extends Controller
      */
     public function index(Request $request)
     {
-        $ipAddress = $request->ip();
-        $command = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'ipconfig /all' : 'ifconfig';
-
-        // Запуск процесса и получение вывода команды
-        $process = Process::fromShellCommandline($command);
-        $process->run();
-
-        // Поиск строки с MAC-адресом
-        $output = $process->getOutput();
-        preg_match('/([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})/', $output, $matches);
-        $macAddress = $matches[0] ?? null;
-        $MAC = exec('getmac');
-        // $MAC = strtok($MAC, ' ');
-
-        return response()->json([
-            'mac_address' => $MAC,
-            'ip_address' => $ipAddress
-        ]);
+        $user = auth()->user();
+        $documents = Document::where('created_user_id', $user->id)->with('file')->paginate(25);
+        return response()->json($documents, 200);
     }
 
     /**

@@ -24,6 +24,5 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::post('document', [\App\Http\Controllers\DocumentController::class, 'store']);
     Route::post('document/{id}', [\App\Http\Controllers\DocumentController::class, 'update']);
     Route::get('/checkAuth', [\App\Http\Controllers\Auth\LoginController::class, 'checkAuth']);
+    Route::get("/documents", [\App\Http\Controllers\DocumentController::class, 'index']);
 });
-
-Route::get('/mac', [\App\Http\Controllers\DocumentController::class, 'index']);
