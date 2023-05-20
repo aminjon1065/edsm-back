@@ -18,6 +18,7 @@ class Mail extends Model
     ];
 
     protected $casts = [
+//        'to' => 'array',
         'send_date' => 'datetime'
     ];
 

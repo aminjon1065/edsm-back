@@ -7,8 +7,7 @@ use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use File as FileHelper;
-use Symfony\Component\Process\Process;
+
 
 class DocumentController extends Controller
 {
@@ -33,7 +32,7 @@ class DocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($request):void
     {
         $document = Document::create([
             'title_document' => $request->input('title_document'),
@@ -41,6 +40,7 @@ class DocumentController extends Controller
             'content' => $request->input('content'),
             'region' => auth()->user()->region,
             'status' => $request->input('status'),
+            'importance' => $request->input('importance'),
             'created_user_id' => auth()->user()->id,
             'created_date' => now(),
         ]);

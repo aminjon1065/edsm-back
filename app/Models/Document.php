@@ -19,6 +19,7 @@ class Document extends Model
             'content',
             'region',
             'status',
+            'importance',
             'created_user_id',
             'updated_user_id',
             'created_date',
