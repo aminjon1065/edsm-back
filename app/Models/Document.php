@@ -19,6 +19,7 @@ class Document extends Model
             'content',
             'region',
             'status',
+            'mail_id',
             'importance',
             'created_user_id',
             'updated_user_id',
@@ -40,5 +41,10 @@ class Document extends Model
     public function file(): HasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    public function mail(): HasMany
+    {
+        return $this->hasMany(Mail::class);
     }
 }

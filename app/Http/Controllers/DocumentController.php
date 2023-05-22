@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\File;
+use App\Models\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +33,7 @@ class DocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request):void
+    public function store(Request $request): void
     {
         $document = Document::create([
             'title_document' => $request->input('title_document'),
@@ -44,6 +45,7 @@ class DocumentController extends Controller
             'created_user_id' => auth()->user()->id,
             'created_date' => now(),
         ]);
+
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {
@@ -52,7 +54,6 @@ class DocumentController extends Controller
 //                $dateValidation = str_replace(' ', '_', date('d-m-Y-H-i-s'));
                 $filename = auth()->user()->first_name . '_' . auth()->user()->last_name . '_' . auth()->user()->region . '_' . date('d-m-Y-H-i-s') . '_' . $originalName;
                 $file->storeAs('public/documents/' . auth()->user()->region, $filename);
-
                 // Создаем новый объект файла, связанный с документом
                 $document->file()->create([
                     'name_file' => $filename,
@@ -62,6 +63,10 @@ class DocumentController extends Controller
                     'created_date' => date(now())
                 ]);
             }
+        }
+        if ($document) {
+            $mailController = new MailController();
+            $mailController->sendMail($document->id, $request->to);
         }
     }
 

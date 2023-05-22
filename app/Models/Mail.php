@@ -15,19 +15,21 @@ class Mail extends Model
         'to',
         'from',
         'send_date',
+        'document_id'
     ];
 
     protected $casts = [
 //        'to' => 'array',
-        'send_date' => 'datetime'
+        'send_date' => 'datetime',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function document():HasMany
+
+    public function document(): BelongsTo
     {
-        return  $this->hasMany(Document::class);
+        return $this->belongsTo(Document::class);
     }
 }

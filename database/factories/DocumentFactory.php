@@ -26,7 +26,6 @@ class DocumentFactory extends Factory
             'status' => array_rand($statusArr),
             'created_user_id' => $user->id,
             'updated_user_id' => $user->id,
-            'mail_id' => $mails->id,
             'created_date' => fake()->dateTime(),
             'updated_date' => fake()->dateTime(),
         ];
