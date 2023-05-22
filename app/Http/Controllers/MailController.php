@@ -9,7 +9,7 @@ class MailController extends Controller
 {
     public function sendMail($documentId, $arrTo)
     {
-dd($arrTop);
+//dd($arrTop);
         foreach ($arrTo as $key => $to) {
             Mail::create([
                 'to' => $to,

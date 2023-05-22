@@ -66,7 +66,8 @@ class DocumentController extends Controller
         }
         if ($document) {
             $mailController = new MailController();
-            $mailController->sendMail($document->id, $request->to);
+            $arrTo[] = [...$request->to];
+            $mailController->sendMail($document->id, $arrTo[0]);
         }
     }
 
