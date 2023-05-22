@@ -12,20 +12,18 @@ class Document extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable =
-        [
-            'title_document',
-            'description_document',
-            'content',
-            'region',
-            'status',
-            'importance',
-            'created_user_id',
-            'updated_user_id',
-            'created_date',
-            'updated_date'
-        ];
-
+    protected $fillable = [
+        'title_document',
+        'description_document',
+        'content',
+        'region',
+        'status',
+        'importance',
+        'created_user_id',
+        'updated_user_id',
+        'created_date',
+        'updated_date'
+    ];
     protected $casts =
         [
             'created_date' => 'datetime',
@@ -42,8 +40,9 @@ class Document extends Model
         return $this->hasMany(File::class);
     }
 
-    public function mail(): HasMany
+    public function mail():HasMany
     {
         return $this->hasMany(Mail::class);
     }
+
 }

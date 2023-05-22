@@ -16,7 +16,6 @@ class DocumentFactory extends Factory
         $user = User::all()->random();
         $importanceArr = ['normal', 'important'];
         $statusArr = ['pending', 'watched', 'late'];
-        $mails = Mail::all()->random();
         return [
             'title_document' => fake()->word(),
             'description_document' => fake()->text(),
@@ -25,7 +24,7 @@ class DocumentFactory extends Factory
             'importance' => array_rand($importanceArr),
             'status' => array_rand($statusArr),
             'created_user_id' => $user->id,
-            'updated_user_id' => $user->id,
+            'updated_user_id' => User::all()->random()->id,
             'created_date' => fake()->dateTime(),
             'updated_date' => fake()->dateTime(),
         ];

@@ -6,21 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mail extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'to',
         'from',
-        'send_date',
         'document_id'
-    ];
-
-    protected $casts = [
-//        'to' => 'array',
-        'send_date' => 'datetime',
     ];
 
     public function user(): BelongsTo
@@ -30,6 +25,6 @@ class Mail extends Model
 
     public function document(): BelongsTo
     {
-        return $this->belongsTo(Document::class);
+        return $this->belongsTo(Document::class)->with('file');
     }
 }

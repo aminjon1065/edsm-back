@@ -18,7 +18,6 @@ class MailFactory extends Factory
             'to' => User::all()->random()->id,
             'from' => User::all()->random()->id,
             'document_id' => $documentId,
-            'send_date' => fake()->dateTime()
         ];
     }
 }

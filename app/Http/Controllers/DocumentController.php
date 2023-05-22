@@ -33,26 +33,29 @@ class DocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(Request $request)
     {
+        if (!$request->input('to')) {
+            return response()->json('addres not found', 200);
+        };
+//        Создаём документ
         $document = Document::create([
-            'title_document' => $request->input('title_document'),
-            'description_document' => $request->input('description_document'),
-            'content' => $request->input('content'),
+            'title_document' => $request['title_document'],
+            'description_document' => $request['description_document'],
+            'content' => $request['content'],
             'region' => auth()->user()->region,
-            'status' => $request->input('status'),
-            'importance' => $request->input('importance'),
+            'status' => $request['status'],
+            'importance' => $request['importance'],
             'created_user_id' => auth()->user()->id,
             'created_date' => now(),
         ]);
-
+        //Проверяем есть ли файлы и создаём и загружаем файлы
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {
                 // Сохраняем файл
                 $originalName = $filename = str_replace(' ', '_', $file->getClientOriginalName());
-//                $dateValidation = str_replace(' ', '_', date('d-m-Y-H-i-s'));
-                $filename = auth()->user()->first_name . '_' . auth()->user()->last_name . '_' . auth()->user()->region . '_' . date('d-m-Y-H-i-s') . '_' . $originalName;
+                $filename = auth()->user()->first_name . '_' . auth()->user()->last_name . '_' . auth()->user()->region . '_' . uniqid() . '_' . $originalName;
                 $file->storeAs('public/documents/' . auth()->user()->region, $filename);
                 // Создаем новый объект файла, связанный с документом
                 $document->file()->create([
@@ -60,15 +63,21 @@ class DocumentController extends Controller
                     'extension_file' => $file->getClientOriginalExtension(),
                     'document_id' => $document->id,
                     'created_user_id' => auth()->user()->id,
-                    'created_date' => date(now())
+                    'created_date' => now(),
                 ]);
             }
         }
-        if ($document) {
-            $mailController = new MailController();
-            $arrTo[] = [...$request->to];
-            $mailController->sendMail($document->id, $arrTo[0]);
+//Проверяем адреса
+
+        $arrTo = $request->input('to');
+        foreach ($arrTo as $item) {
+            $document->mail()->create([
+                'to' => $item,
+                'from' => auth()->user()->id,
+                'document_id' => $document->id
+            ]);
         }
+        return $document->file;
     }
 
 

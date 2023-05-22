@@ -21,16 +21,11 @@ class File extends Model
             'created_date',
             'updated_date'
         ];
-
     protected $casts =
         [
             'created_date' => 'datetime',
             'updated_date' => 'datetime',
         ];
-
-    public static function create(array $array)
-    {
-    }
 
     public function document(): BelongsTo
     {

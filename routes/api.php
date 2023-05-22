@@ -25,5 +25,6 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::post('document/{id}', [\App\Http\Controllers\DocumentController::class, 'update']);
     Route::get('/checkAuth', [\App\Http\Controllers\Auth\LoginController::class, 'checkAuth']);
     Route::get('/inbox', [\App\Http\Controllers\MailController::class, 'getInboxMails']);
+    Route::get('/inbox/{id}', [\App\Http\Controllers\MailController::class, 'showMail']);
     Route::get("/documents", [\App\Http\Controllers\DocumentController::class, 'index']);
 });
