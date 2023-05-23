@@ -15,12 +15,14 @@ class DocumentFactory extends Factory
     {
         $user = User::all()->random();
         $importanceArr = ['normal', 'important'];
+        $typeArr = ['local', 'outside'];
         $statusArr = ['pending', 'watched', 'late'];
         return [
             'title_document' => fake()->word(),
             'description_document' => fake()->text(),
             'content' => fake()->text(),
             'region' => $user->region,
+            'type' => array_rand($typeArr),
             'importance' => array_rand($importanceArr),
             'status' => array_rand($statusArr),
             'created_user_id' => $user->id,

@@ -45,6 +45,7 @@ class DocumentController extends Controller
             'content' => $request['content'],
             'region' => auth()->user()->region,
             'status' => $request['status'],
+            'type' => $request['type'],
             'importance' => $request['importance'],
             'created_user_id' => auth()->user()->id,
             'created_date' => now(),
@@ -77,7 +78,7 @@ class DocumentController extends Controller
                 'document_id' => $document->id
             ]);
         }
-        foreach ($arrTo as $key=> $item) {
+        foreach ($arrTo as $key => $item) {
             $document->openedMail()->create([
                 'mail_id' => $document->mail[$key]['id'],
                 'user_id' => $item,
