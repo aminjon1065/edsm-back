@@ -10,7 +10,7 @@ class MailController extends Controller
 {
     public function getInboxMails()
     {
-        $mails = Mail::where('from', auth()->user()->id)->with('document')->with('openedMail')->paginate(20);
+        $mails = Mail::where('to', auth()->user()->id)->with('openedMail')->paginate(20);
 //        $mails = Mail::with('document')->where('from', auth()->user()->id)->get();
 //        $mails = Mail::with('document')->get();
 //        $mails = Mail::with('openedMail')->get();
