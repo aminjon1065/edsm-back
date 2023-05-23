@@ -40,9 +40,10 @@ class Document extends Model
         return $this->hasMany(File::class);
     }
 
-    public function mail():HasMany
+    public function mail(): HasMany
     {
         return $this->hasMany(Mail::class);
     }
+
 
 }
