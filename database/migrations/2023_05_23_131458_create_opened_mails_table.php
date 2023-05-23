@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('opened_mails', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mail_id')->references('id')->on('mails')->onDelete('cascade');
-            $table->foreignId('document_id')->references('id')->on('mails')->onDelete('cascade');
+            $table->foreignId('document_id')->references('id')->on('documents')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('opened')->default(false);
             $table->timestamps();
