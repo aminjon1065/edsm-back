@@ -27,6 +27,7 @@ class Mail extends Model
     {
         return $this->belongsTo(Document::class)->with('file');
     }
+
     public function openedMail(): HasMany
     {
         return $this->hasMany(OpenedMail::class);

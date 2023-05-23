@@ -12,6 +12,7 @@ class OpenedMail extends Model
 
     protected $fillable = [
         'mail_id',
+        'document_id',
         'user_id',
         'opened'
     ];
@@ -20,5 +21,9 @@ class OpenedMail extends Model
     public function mail(): BelongsTo
     {
         return $this->belongsTo(Mail::class);
+    }
+    public function document(): BelongsTo
+    {
+        return $this->belongsTo(Document::class);
     }
 }

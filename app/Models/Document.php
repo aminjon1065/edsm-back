@@ -45,5 +45,8 @@ class Document extends Model
         return $this->hasMany(Mail::class);
     }
 
-
+    public function openedMail(): HasMany
+    {
+        return $this->hasMany(OpenedMail::class);
+    }
 }

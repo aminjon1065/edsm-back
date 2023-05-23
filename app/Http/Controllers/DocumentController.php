@@ -77,7 +77,14 @@ class DocumentController extends Controller
                 'document_id' => $document->id
             ]);
         }
-        return $document->file;
+        foreach ($arrTo as $key=> $item) {
+            $document->openedMail()->create([
+                'mail_id' => $document->mail[$key]['id'],
+                'user_id' => $item,
+                'opened' => false
+            ]);
+        }
+        return $document->openedMail;
     }
 
 
@@ -124,11 +131,8 @@ class DocumentController extends Controller
         $document->status = $request->input('status', $document->status);
         $document->updated_date = date(now());
         $document->updated_user_id = auth()->user()->id;
-
         $document->save();
-
         $files = $request->file('files');
-
         if ($files) {
 //            $document->file()->delete();
             // Удаление предыдущих файлов
@@ -137,7 +141,6 @@ class DocumentController extends Controller
                 Storage::move('public/documents/' . $file->document->region . '/' . $file->name_file, 'public/trashed/' . date('d-m-Y-H-i-s') . '_' . $file->document->region . '_' . $file->name_file);
                 $file->delete();
             }
-
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
                     $originalName = str_replace(' ', '_', $file->getClientOriginalName());
