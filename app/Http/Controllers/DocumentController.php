@@ -68,13 +68,14 @@ class DocumentController extends Controller
                 ]);
             }
         }
+        
 //Проверяем адреса
-
         $arrTo = $request->input('to');
         foreach ($arrTo as $item) {
             $document->mail()->create([
                 'to' => $item,
                 'from' => auth()->user()->id,
+                'from_user_name' => auth()->user()->full_name,
                 'document_id' => $document->id
             ]);
         }
@@ -87,7 +88,6 @@ class DocumentController extends Controller
         }
         return $document->openedMail;
     }
-
 
     /**
      * Display the specified resource.

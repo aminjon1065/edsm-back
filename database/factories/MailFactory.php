@@ -13,10 +13,12 @@ class MailFactory extends Factory
 
     public function definition(): array
     {
+        $user = User::all()->random();
         $documentId = Document::all()->random()->id;
         return [
             'to' => User::all()->random()->id,
-            'from' => User::all()->random()->id,
+            'from' => $user->id,
+            'from_user_name' => $user->full_name,
             'document_id' => $documentId,
         ];
     }
