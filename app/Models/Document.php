@@ -13,12 +13,12 @@ class Document extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'uuid',
         'title_document',
         'description_document',
         'content',
         'region',
         'status',
-        'type',
         'importance',
         'created_user_id',
         'updated_user_id',
@@ -29,6 +29,7 @@ class Document extends Model
         [
             'created_date' => 'datetime',
             'updated_date' => 'datetime',
+            'uuid'=>'string'
         ];
 
     public function user(): BelongsTo

@@ -40,12 +40,12 @@ class DocumentController extends Controller
         };
 //        Создаём документ
         $document = Document::create([
+            'uuid' => (string)\Str::uuid(),
             'title_document' => $request['title_document'],
             'description_document' => $request['description_document'],
             'content' => $request['content'],
             'region' => auth()->user()->region,
             'status' => $request['status'],
-            'type' => $request['type'],
             'importance' => $request['importance'],
             'created_user_id' => auth()->user()->id,
             'created_date' => now(),
@@ -68,7 +68,7 @@ class DocumentController extends Controller
                 ]);
             }
         }
-        
+
 //Проверяем адреса
         $arrTo = $request->input('to');
         foreach ($arrTo as $item) {

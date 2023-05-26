@@ -12,13 +12,13 @@ return new class extends Migration {
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('title_document');
             $table->text('description_document')->nullable();
             $table->text('content')->nullable();
             $table->string('region');
-            $table->string('importance');
+            $table->boolean('importance');
             $table->string('status');
-            $table->string('type');
             $table->foreignId('created_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('updated_user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('created_date');
