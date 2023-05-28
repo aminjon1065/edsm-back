@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\File;
-use App\Models\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -86,7 +85,7 @@ class DocumentController extends Controller
                 'opened' => false
             ]);
         }
-        return $document->openedMail;
+        return response()->json($document->openedMail, 201);
     }
 
     /**
