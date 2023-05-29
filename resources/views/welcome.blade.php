@@ -18,5 +18,9 @@
     <body class="antialiased">
         {{$MAC = exec('getmac')}}
     {{$MAC = strtok($MAC, ' ')}}
+
+    <span>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, totam!
+    </span>
     </body>
 </html>
