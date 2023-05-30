@@ -27,4 +27,5 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('/inbox', [\App\Http\Controllers\MailController::class, 'getInboxMails']);
     Route::get('/inbox/{id}', [\App\Http\Controllers\MailController::class, 'showMail']);
     Route::get("/documents", [\App\Http\Controllers\DocumentController::class, 'index']);
+    Route::resource('users', 'App\Http\Controllers\UsersListController');
 });
