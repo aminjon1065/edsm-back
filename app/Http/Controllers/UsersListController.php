@@ -15,7 +15,7 @@ class UsersListController extends Controller
         $users = User::all()->map(function ($user) {
             return [
                 'value' => $user->id,
-                'label' => $user->full_name
+                'label' => $user->full_name === auth()->user()->full_name ? $user->full_name .' (Себе)' : $user->full_name
             ];
         });
 
