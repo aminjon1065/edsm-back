@@ -67,8 +67,7 @@ class DocumentController extends Controller
                 ]);
             }
         }
-
-//Проверяем адреса
+        //Проверяем адреса
         $arrTo = $request->input('to');
         foreach ($arrTo as $item) {
             $document->mail()->create([
@@ -174,5 +173,28 @@ class DocumentController extends Controller
     public function destroy(Document $document)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $documents = Document::where(function ($queryBuilder) use ($query, $startDate, $endDate) {
+            if ($query) {
+                $queryBuilder->where(function ($queryBuilder) use ($query) {
+                    $queryBuilder->where('title_document', 'LIKE', "%{$query}%")
+                        ->orWhere('description_document', 'LIKE', "%{$query}%")
+                        ->orWhere('content', 'LIKE', "%{$query}%")
+                        ->orWhere('region', 'LIKE', "%{$query}%");
+                });
+            }
+
+            if ($startDate && $endDate) {
+                $queryBuilder->whereBetween('created_date', [$startDate, $endDate]);
+            }
+        })->get();
+
+        return response()->json($documents);
     }
 }
