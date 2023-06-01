@@ -22,7 +22,6 @@ class MailController extends Controller
 
     public function showMail($id)
     {
-        $item = Mail::with('document')->with('file')->where('id', $id)->get();
-        return $item;
+        return Mail::with('document')->where('id', $id)->get();
     }
 }
