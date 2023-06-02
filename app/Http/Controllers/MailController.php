@@ -25,27 +25,27 @@ class MailController extends Controller
     {
         return Mail::with('document')->where('id', $id)->get();
     }
-
     public function search(Request $request)
     {
         if (!auth()->check()) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         ['query' => $searchQuery, 'startDate' => $startDate, 'endDate' => $endDate] = $request->all();
         $userId = auth()->user()->id;
-
-        $documents = Document::with(['mail' => fn($query) => $query->where('to', $userId)])
-            ->where(fn($query) => $query->where('title_document', 'LIKE', '%' . $searchQuery . '%')
-                ->orWhere('description_document', 'LIKE', '%' . $searchQuery . '%'));
-
+        $startDateFormatted = Carbon::parse($startDate)->startOfDay();
+        $endDateFormatted = Carbon::parse($endDate)->endOfDay();
+        $mails = Mail::where('to', $userId)
+            ->whereHas('document', function ($query) use ($searchQuery, $startDateFormatted, $endDateFormatted) {
+                $query->where('title_document', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('description_document', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('region', 'LIKE', '%' . $searchQuery . '%');
+            });
         if ($startDate && $endDate) {
             $startDateFormatted = Carbon::parse($startDate)->startOfDay();
             $endDateFormatted = Carbon::parse($endDate)->endOfDay();
-            $documents->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
+            $mails->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
         }
-        $documents = $documents->paginate(20);
+        $documents = $mails->with('document')->with('openedMail')->paginate(20);
         return response()->json($documents, 200);
     }
-
 }
