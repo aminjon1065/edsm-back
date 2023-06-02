@@ -9,23 +9,7 @@ use Carbon\Carbon;
 
 class MailController extends Controller
 {
-    public function getInboxMails()
-    {
-        $mails = Mail::where('to', auth()->user()->id)
-            ->with(['openedMail' => function ($query) {
-                $query->where('user_id', auth()->user()->id);
-            }])
-//            ->with('openedMail')
-            ->with('document')
-            ->paginate(20);
-        return response()->json($mails, 200);
-    }
-
-    public function showMail($id)
-    {
-        return Mail::with('document')->where('id', $id)->get();
-    }
-    public function search(Request $request)
+    public function getInboxMails(Request $request)
     {
         if (!auth()->check()) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -47,5 +31,15 @@ class MailController extends Controller
         }
         $documents = $mails->with('document')->with('openedMail')->paginate(20);
         return response()->json($documents, 200);
+    }
+
+    public function showMail($id)
+    {
+        return Mail::with('document')->where('id', $id)->get();
+    }
+
+    public function search(Request $request)
+    {
+
     }
 }
