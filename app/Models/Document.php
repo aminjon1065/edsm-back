@@ -27,6 +27,7 @@ class Document extends Model
     ];
     protected $casts =
         [
+            'importance' => 'boolean',
             'created_date' => 'datetime',
             'updated_date' => 'datetime',
             'uuid'=>'string'
