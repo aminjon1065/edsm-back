@@ -16,10 +16,8 @@ class MailController extends Controller
         }
         ['query' => $searchQuery, 'startDate' => $startDate, 'endDate' => $endDate] = $request->all();
         $userId = auth()->user()->id;
-        $startDateFormatted = Carbon::parse($startDate)->startOfDay();
-        $endDateFormatted = Carbon::parse($endDate)->endOfDay();
         $mails = Mail::where('to', $userId)
-            ->whereHas('document', function ($query) use ($searchQuery, $startDateFormatted, $endDateFormatted) {
+            ->whereHas('document', function ($query) use ($searchQuery) {
                 $query->where('title_document', 'LIKE', '%' . $searchQuery . '%')
                     ->orWhere('description_document', 'LIKE', '%' . $searchQuery . '%')
                     ->orWhere('region', 'LIKE', '%' . $searchQuery . '%');
