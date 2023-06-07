@@ -31,9 +31,9 @@ class MailController extends Controller
         return response()->json($documents, 200);
     }
 
-    public function showMail($id)
+    public function showMail($uuid)
     {
-        return Mail::with('document')->where('id', $id)->get();
+        return Mail::with('document')->where('uuid', $uuid)->first();
     }
 
     public function search(Request $request)

@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('mails', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->foreignId('to')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('from')->references('id')->on('users')->onDelete('cascade');
             $table->string('from_user_name');

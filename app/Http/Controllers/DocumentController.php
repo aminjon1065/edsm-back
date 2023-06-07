@@ -71,6 +71,7 @@ class DocumentController extends Controller
         $arrTo = $request->input('to');
         foreach ($arrTo as $item) {
             $document->mail()->create([
+                'uuid' => (string)\Str::uuid(),
                 'to' => $item,
                 'from' => auth()->user()->id,
                 'from_user_name' => auth()->user()->full_name,

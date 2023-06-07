@@ -13,6 +13,7 @@ class Mail extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'uuid',
         'to',
         'from',
         'from_user_name',
