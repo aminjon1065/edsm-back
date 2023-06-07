@@ -77,4 +77,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Mail::class);
     }
+
+    public function departmentHead():HasOne
+    {
+        return $this->hasOne(DepartmentHead::class);
+    }
+
+    public function subordinates():HasMany
+    {
+        return $this->hasMany(Subordinate::class);
+    }
 }
