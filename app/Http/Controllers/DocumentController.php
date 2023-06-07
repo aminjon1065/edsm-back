@@ -44,6 +44,7 @@ class DocumentController extends Controller
             'description_document' => $request['description_document'],
             'content' => $request['content'],
             'region' => auth()->user()->region,
+            'department' => auth()->user()->department,
             'status' => 'pending',
             'importance' => $request['importance'],
             'created_user_id' => auth()->user()->id,

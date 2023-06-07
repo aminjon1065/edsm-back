@@ -18,6 +18,7 @@ class Document extends Model
         'description_document',
         'content',
         'region',
+        'department',
         'status',
         'importance',
         'created_user_id',
