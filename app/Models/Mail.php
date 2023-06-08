@@ -27,7 +27,10 @@ class Mail extends Model
 
     public function document(): BelongsTo
     {
-        return $this->belongsTo(Document::class)->with('file');
+        return $this->belongsTo(Document::class)
+            ->with(['file', 'history.recipient' => function ($query) {
+                $query->select('id', 'full_name');
+            }]);
     }
 
     public function openedMail(): HasMany

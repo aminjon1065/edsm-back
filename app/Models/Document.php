@@ -31,7 +31,7 @@ class Document extends Model
             'importance' => 'boolean',
             'created_date' => 'datetime',
             'updated_date' => 'datetime',
-            'uuid'=>'string'
+            'uuid' => 'string'
         ];
 
     public function user(): BelongsTo
@@ -52,5 +52,10 @@ class Document extends Model
     public function openedMail(): HasMany
     {
         return $this->hasMany(OpenedMail::class);
+    }
+
+    public function history(): HasMany
+    {
+        return $this->hasMany(DocumentHistory::class);
     }
 }

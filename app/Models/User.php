@@ -87,4 +87,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Subordinate::class);
     }
+    public function sentDocuments(): HasMany
+    {
+        return $this->hasMany(DocumentHistory::class, 'sender_id');
+    }
+
+    public function receivedDocuments(): HasMany
+    {
+        return $this->hasMany(DocumentHistory::class, 'recipient_id');
+    }
 }

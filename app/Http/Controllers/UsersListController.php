@@ -13,9 +13,10 @@ class UsersListController extends Controller
     public function index()
     {
         $users = User::all()->map(function ($user) {
+            $usersLabel = $user->full_name === auth()->user()->full_name ? $user->full_name . ' (Себе)' : $user->full_name;
             return [
                 'value' => $user->id,
-                'label' => $user->full_name === auth()->user()->full_name ? $user->full_name .' (Себе)' : $user->full_name
+                'label' => $usersLabel . ' (' . $user->region . ')'
             ];
         });
 
