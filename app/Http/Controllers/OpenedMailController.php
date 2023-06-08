@@ -10,6 +10,6 @@ class OpenedMailController extends Controller
 {
     public function showed($id):void
     {
-        OpenedMail::where('mail_id', $id)->update(['opened' => true]);
+        OpenedMail::where('id', $id)->update(['opened' => true]);
     }
 }
