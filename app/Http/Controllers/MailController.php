@@ -40,4 +40,20 @@ class MailController extends Controller
     {
 
     }
+
+    public function redirectMail(Request $request): void
+    {
+        $uuid = $request->input('uuid');
+        $mail = Mail::where('uuid', $uuid)->first();
+        $newMail = new Mail();
+        foreach ($request->input('to') as $item) {
+            $newMail->to = $item;
+        }
+        $newMail->from = auth()->user()->id;
+        $newMail->from_user_name = auth()->user()->full_name;
+        foreach ($mail->documents as $document) {
+            $newMail->documents()->attach($document->id);
+        }
+        $newMail->save();
+    }
 }
