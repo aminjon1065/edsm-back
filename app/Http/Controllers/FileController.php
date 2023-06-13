@@ -37,14 +37,16 @@ class FileController extends Controller
 
         $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '(' . auth()->user()->region . '_' . auth()->user()->department . ')' . '.' . $file->getClientOriginalExtension();
         $fileExtension = $file->getClientOriginalExtension();
+        $size = $file->getSize();
         File::create([
             'name_file' => $fileName,
+            'size'=>$size,
             'extension_file' => $fileExtension,
             'document_id' => $documentId,
             'created_user_id' => $userId,
             'created_date' => $createdDate
         ]);
-        
+
         return 'test';
     }
 

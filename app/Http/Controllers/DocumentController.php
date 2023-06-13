@@ -61,6 +61,7 @@ class DocumentController extends Controller
                 // Создаем новый объект файла, связанный с документом
                 $document->file()->create([
                     'name_file' => $filename,
+                    'size' => round($file->getSize()/ 1024 / 1024, 2),
                     'extension_file' => $file->getClientOriginalExtension(),
                     'document_id' => $document->id,
                     'created_user_id' => auth()->user()->id,

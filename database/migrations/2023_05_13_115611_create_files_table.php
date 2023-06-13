@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('name_file');
+            $table->string('size');
             $table->string('extension_file');
             $table->foreignId('document_id')->references('id')->on('documents')->onDelete('cascade');
             $table->foreignId('created_user_id')->references('id')->on('users')->onDelete('cascade');
