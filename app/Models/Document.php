@@ -20,6 +20,7 @@ class Document extends Model
         'region',
         'department',
         'status',
+        'type',
         'importance',
         'created_user_id',
         'updated_user_id',

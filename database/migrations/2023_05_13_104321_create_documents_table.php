@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('department');
             $table->boolean('importance');
             $table->string('status');
+            $table->string('type');
             $table->foreignId('created_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('updated_user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('created_date');
