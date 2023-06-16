@@ -37,7 +37,7 @@ class MailController extends Controller
 
     public function showMail($uuid)
     {
-        return Mail::with(['document', 'openedMail', 'mailReply'])->where('uuid', $uuid)->first();
+        return Mail::with(['document', 'openedMail', 'replyTo.document'])->where('uuid', $uuid)->first();
     }
 
     public function search(Request $request)

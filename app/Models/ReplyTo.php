@@ -23,4 +23,9 @@ class ReplyTo extends Model
     {
         return $this->belongsTo(Mail::class, 'mail_id');
     }
+
+    public function document(): BelongsTo
+    {
+        return $this->belongsTo(Document::class)->with(['file']);
+    }
 }

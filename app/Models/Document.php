@@ -59,4 +59,8 @@ class Document extends Model
     {
         return $this->hasMany(DocumentHistory::class);
     }
+    public function replyTo(): HasMany
+    {
+        return $this->hasMany(ReplyTo::class);
+    }
 }

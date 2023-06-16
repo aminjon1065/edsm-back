@@ -43,10 +43,6 @@ class Mail extends Model
     {
         return $this->hasOne(ReplyTo::class);
     }
-    public function mailReply(): HasOne
-    {
-        return $this->hasOne(ReplyTo::class, 'mail_id');
-    }
     public function mailReplyId(): HasOne
     {
         return $this->hasOne(ReplyTo::class, 'mail_reply_id');
