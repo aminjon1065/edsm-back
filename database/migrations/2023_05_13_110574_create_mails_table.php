@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->uuid('uuid');
             $table->foreignId('to')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('from')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('reply')->default(false);
             $table->string('from_user_name');
             $table->foreignId('document_id')->nullable()->references('id')->on('documents')->onDelete('cascade');
             $table->timestamps();

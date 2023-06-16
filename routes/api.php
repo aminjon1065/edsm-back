@@ -30,5 +30,6 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::resource('users', 'App\Http\Controllers\UsersListController');
     Route::post('/showed/{id}', [\App\Http\Controllers\OpenedMailController::class, 'showed']);
     Route::post('/redirect-mail', [\App\Http\Controllers\MailController::class, 'redirectMail']);
+    Route::post('/mail/reply-to/{uui}', [\App\Http\Controllers\MailController::class, 'replyTo']);
 //    Route::post('/search', [\App\Http\Controllers\MailController::class, 'search']);
 });
