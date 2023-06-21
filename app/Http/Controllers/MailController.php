@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MailSentEvent;
 use App\Models\Document;
 use App\Models\Mail;
 use App\Models\ReplyTo;
@@ -32,6 +33,7 @@ class MailController extends Controller
         }
 
         $documents = $mails->with('document')->with('openedMail')->paginate(20);
+//        event(MailSentEvent::broadcast($documents));
         return response()->json($documents, 200);
     }
 
