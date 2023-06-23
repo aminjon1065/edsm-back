@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MailSentEvent;
 use App\Models\Document;
 use App\Models\File;
 use Illuminate\Http\Request;
@@ -95,6 +96,7 @@ class DocumentController extends Controller
                 'opened' => false
             ]);
         }
+        event(new MailSentEvent('$document', 'Hello'));
         return response()->json($document->openedMail, 201);
     }
 

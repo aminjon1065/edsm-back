@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Mail;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,14 +15,15 @@ class MailSentEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $mail;
-    public $message;    /**
-     * Create a new event instance.
-     */
-    public function __construct(Mail $mail)
+//    public $mail;
+//    public $message;    /**
+//     * Create a new event instance.
+//     */
+    public function __construct(public string $mail, public string $message)
     {
-        $this->mail = $mail;
-        $this->message = $mail->content; // Используйте поле с текстом письма, здесь я предполагаю, что оно называется "content"
+//        public string $mail;
+//        $this->mail = $mail;
+//        $this->message = $mail->title_document; // Используйте поле с текстом письма, здесь я предполагаю, что оно называется "content"
 
     }
 
@@ -32,10 +34,12 @@ class MailSentEvent implements ShouldBroadcastNow
      */
     public function broadcastOn(): array
     {
+
         return [
             new Channel('mail-sent'),
         ];
     }
+
     public function broadcastWith(): array
     {
         return [
@@ -43,5 +47,9 @@ class MailSentEvent implements ShouldBroadcastNow
             'message' => $this->message
 
         ];
+    }
+    public function broadcastAs()
+    {
+        return 'mail-sent';
     }
 }
