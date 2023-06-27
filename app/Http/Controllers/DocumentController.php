@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MailSentEvent;
+use App\Events\NotificationMail;
 use App\Models\Document;
 use App\Models\File;
 use Illuminate\Http\Request;
@@ -38,7 +38,7 @@ class DocumentController extends Controller
         if (!$request->input('to')) {
             return response()->json('addres not found', 200);
         };
-//        Создаём документ
+        //        Создаём документ
         $document = Document::create([
             'uuid' => (string)\Str::uuid(),
             'title_document' => $request['title_document'],
@@ -96,7 +96,7 @@ class DocumentController extends Controller
                 'opened' => false
             ]);
         }
-        event(new MailSentEvent('$document', 'Hello'));
+        broadcast(new NotificationMail());
         return response()->json($document->openedMail, 201);
     }
 
@@ -146,17 +146,17 @@ class DocumentController extends Controller
         $document->save();
         $files = $request->file('files');
         if ($files) {
-//            $document->file()->delete();
+            //            $document->file()->delete();
             // Удаление предыдущих файлов
             foreach ($document->file as $file) {
-//                dd($file->document->region);
+                //                dd($file->document->region);
                 Storage::move('public/documents/' . $file->document->region . '/' . $file->name_file, 'public/trashed/' . date('d-m-Y-H-i-s') . '_' . $file->document->region . '_' . $file->name_file);
                 $file->delete();
             }
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
                     $originalName = str_replace(' ', '_', $file->getClientOriginalName());
-//                $dateValidation = str_replace(' ', '_', date('d-m-Y-H-i-s'));
+                    //                $dateValidation = str_replace(' ', '_', date('d-m-Y-H-i-s'));
                     $filename = auth()->user()->first_name . '_' . auth()->user()->last_name . '_' . auth()->user()->region . '_' . date('d-m-Y-H-i-s') . '_' . $originalName;
                     $file->storeAs('public/documents/' . auth()->user()->region, $filename);
                     $newFile = new File([
@@ -187,6 +187,4 @@ class DocumentController extends Controller
     {
         //
     }
-
-
 }
