@@ -108,7 +108,6 @@ class DocumentController extends Controller
 //        NotificationMail::dispatch($document->title_document);
         foreach ($document->mail as $mail) {
             NotificationMail::dispatch($mail->uuid, $item);
-
         }
         return response()->json($document->mail, 201);
     }

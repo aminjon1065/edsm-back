@@ -33,10 +33,9 @@ class MailController extends Controller
             $mails->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
         }
 
-        $documents = $mails->with('document')->with('openedMail');
-        if ($order && $column)
-        {
-            $documents = $mails->with('document')->with('openedMail')->orderBy($column, $order)->paginate(20);
+        $documents = $mails->with(['toUser', 'fromUser'])->with('document')->with('openedMail');
+        if ($order && $column) {
+            $documents = $mails->with(['toUser', 'fromUser'])->with('document')->with('openedMail')->orderBy($column, $order)->paginate(20);
         }
 //        event(MailSentEvent::broadcast($documents));
         return response()->json($documents, 200);
@@ -178,7 +177,7 @@ class MailController extends Controller
             $mails->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
         }
 
-        $documents = $mails->with('document')->with('openedMail')->paginate(20);
+        $documents = $mails->with(['toUser', 'fromUser'])->with('document')->with('openedMail')->paginate(20);
         return response()->json($documents, 200);
     }
 

@@ -27,6 +27,16 @@ class Mail extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function toUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'to', 'id');
+    }
+
+    public function fromUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'from', 'id');
+    }
+
     public function document(): BelongsTo
     {
         return $this->belongsTo(Document::class)
@@ -39,10 +49,12 @@ class Mail extends Model
     {
         return $this->hasMany(OpenedMail::class);
     }
+
     public function replyTo(): HasOne
     {
         return $this->hasOne(ReplyTo::class);
     }
+
     public function mailReplyId(): HasOne
     {
         return $this->hasOne(ReplyTo::class, 'mail_reply_id');
