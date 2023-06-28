@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Hello;
 use App\Events\NotificationMail;
 use App\Models\Document;
 use App\Models\File;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -95,9 +97,20 @@ class DocumentController extends Controller
                 'user_id' => $item,
                 'opened' => false
             ]);
+//            NotificationMail::dispatch($document, $item);
+
+//            $user = User::find($item);
+//            if ($user) {
+//                NotificationMail::dispatch($document->title_document, $user);
+//            }
         }
-        broadcast(new NotificationMail());
-        return response()->json($document->openedMail, 201);
+//        broadcast(new NotificationMail($document->title_document));
+//        NotificationMail::dispatch($document->title_document);
+        foreach ($document->mail as $mail) {
+            NotificationMail::dispatch($mail->uuid, $item);
+
+        }
+        return response()->json($document->mail, 201);
     }
 
     /**

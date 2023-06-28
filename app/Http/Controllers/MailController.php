@@ -16,7 +16,7 @@ class MailController extends Controller
         if (!auth()->check()) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        ['query' => $searchQuery, 'startDate' => $startDate, 'endDate' => $endDate] = $request->all();
+        ['query' => $searchQuery, 'startDate' => $startDate, 'endDate' => $endDate, 'order' => $order, 'column' => $column] = $request->all();
         $userId = auth()->user()->id;
         $mails = Mail::where('to', $userId)
             ->whereHas('document', function ($query) use ($searchQuery) {
@@ -31,8 +31,14 @@ class MailController extends Controller
             $endDateFormatted = Carbon::parse($endDate)->endOfDay();
             $mails->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
         }
-
+        if ($order && $column) {
+            $mails->orderBy($column, $order);
+        }
         $documents = $mails->with('document')->with('openedMail')->paginate(20);
+//        if ($order && $column)
+//        {
+//            return $documents->orderBy($column, $order)->paginate(20);
+//        }
 //        event(MailSentEvent::broadcast($documents));
         return response()->json($documents, 200);
     }

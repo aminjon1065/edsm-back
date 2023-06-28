@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => env('Asia/Dushanbe', 'UTC'),
+    'timezone' => env('Asia/Karachi', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +165,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),

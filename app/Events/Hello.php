@@ -4,34 +4,29 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NotificationMail implements ShouldBroadcast
+class Hello
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public string $message;
-    public int $userId;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(string $message, int $userId)
+    public function __construct()
     {
-        $this->message = $message;
-        $this->userId = $userId;
+        //
     }
 
-    /**
-     * Get the data to broadcast.
-     *
-     * @return array
-     */
     public function broadcastWith(): array
     {
-        return ['message' => $this->message];
+        return [
+            'message' => 'request'
+        ];
     }
 
     /**
@@ -39,10 +34,8 @@ class NotificationMail implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn(): array
+    public function broadcastOn(): Channel|array
     {
-        return [
-            new Channel('notification.' . $this->userId)
-        ];
+        return new Channel('channel');
     }
 }
