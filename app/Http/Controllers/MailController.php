@@ -22,6 +22,7 @@ class MailController extends Controller
             ->whereHas('document', function ($query) use ($searchQuery) {
                 $query->where('title_document', 'LIKE', '%' . $searchQuery . '%')
                     ->orWhere('description_document', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('type', 'LIKE', '%' . $searchQuery . '%')
                     ->orWhere('region', 'LIKE', '%' . $searchQuery . '%');
             })->whereDoesntHave('document.mail', function ($query) {
                 $query->where('reply', true);
@@ -31,14 +32,12 @@ class MailController extends Controller
             $endDateFormatted = Carbon::parse($endDate)->endOfDay();
             $mails->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
         }
-        if ($order && $column) {
-            $mails->orderBy($column, $order);
+
+        $documents = $mails->with('document')->with('openedMail');
+        if ($order && $column)
+        {
+            $documents = $mails->with('document')->with('openedMail')->orderBy($column, $order)->paginate(20);
         }
-        $documents = $mails->with('document')->with('openedMail')->paginate(20);
-//        if ($order && $column)
-//        {
-//            return $documents->orderBy($column, $order)->paginate(20);
-//        }
 //        event(MailSentEvent::broadcast($documents));
         return response()->json($documents, 200);
     }
