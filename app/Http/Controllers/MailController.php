@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MailSentEvent;
 use App\Models\Document;
 use App\Models\Mail;
 use App\Models\ReplyTo;
