@@ -51,6 +51,7 @@ class DocumentController extends Controller
             'status' => 'pending',
             'type' => $request['type'],
             'importance' => $request['importance'],
+            'day_done' => $request['day_done'],
             'created_user_id' => auth()->user()->id,
             'created_date' => now(),
         ]);

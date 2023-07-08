@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->string('type');
             $table->foreignId('created_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('updated_user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->date("date_done")->nullable();
             $table->dateTime('created_date');
             $table->dateTime('updated_date')->nullable();
             $table->timestamps();
